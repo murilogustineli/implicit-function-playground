@@ -25,8 +25,10 @@ def plot_function(
     y: torch.tensor,
     ylim: list = [-1, 5],
     function_name: str = "y = x^2",
+    figsize: tuple = (8, 6),
+    dpi: int = 120,
 ):
-    fig, ax = plt.subplots(figsize=(8, 6), dpi=120)
+    fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
     ax.plot(x.numpy(), y.numpy(), label=function_name, c="red", linewidth=2.5)
     ax.set_title("Function Approximation", weight="bold", fontsize=16)
     ax.set_xlabel("X-axis", fontsize=14)
@@ -50,8 +52,10 @@ def plot_model(
     title: str = "Linear Model",
     ylim: list = [-1, 5],
     function_name: str = "y = x^2",
+    figsize: tuple = (8, 6),
+    dpi: int = 120,
 ) -> None:
-    fig, ax = plt.subplots(figsize=(8, 6), dpi=120)
+    fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
     ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label=function_name)
     ax.plot(x.numpy(), predicted, "b-", linewidth=2.5, label=title)
     ax.set_title(f"{title}", weight="bold", fontsize=16)
@@ -79,10 +83,12 @@ def plot_animation(
     legend_loc: str = "best",
     ylim: list = [-1, 5],
     function_name: str = "y=x^2",
+    figsize: tuple = (8, 6),
+    dpi: int = 200,
 ) -> None:
     for epoch, predicted in preds.items():
         path = make_directory("plots", f"{folder_name}")
-        fig, ax = plt.subplots(figsize=(8, 6), dpi=200)
+        fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
         ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label=function_name)
         ax.plot(x.numpy(), predicted, "b-", linewidth=2.5, label=model_name)
         ax.set_title(f"{model_name}, epoch={epoch}", weight="bold", fontsize=16)
