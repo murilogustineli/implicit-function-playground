@@ -1,0 +1,31 @@
+[project]
+name = "ifp"
+version = "0.0.1"
+authors = [{ name = "Murilo Gustineli", email = "murilogustineli@gmail.com" }]
+description = "Implicit Function Playground helper package"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "notebook",
+    "ipykernel",
+    "openpyxl",
+    "jupyterlab",
+    "black",
+    "pre-commit",
+    "torch>=2.5.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/murilogustineli/implicit-function-playground"
+Issues = "https://github.com/murilogustineli/implicit-function-playground/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ifp"]
+namespaces = false
