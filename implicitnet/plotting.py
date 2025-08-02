@@ -20,13 +20,18 @@ def make_directory(folder_name: str, figure_name: str) -> str:
     return path
 
 
-def plot_function(x: torch.tensor, y: torch.tensor):
+def plot_function(
+    x: torch.tensor,
+    y: torch.tensor,
+    ylim: list = [-1, 5],
+    function_name: str = "y = x^2",
+):
     fig, ax = plt.subplots(figsize=(8, 6), dpi=120)
-    ax.plot(x.numpy(), y.numpy(), label="y = x^2", c="red", linewidth=2.5)
+    ax.plot(x.numpy(), y.numpy(), label=function_name, c="red", linewidth=2.5)
     ax.set_title("Function Approximation", weight="bold", fontsize=16)
     ax.set_xlabel("X-axis", fontsize=14)
     ax.set_ylabel("Y-axis", fontsize=14)
-    ax.set_ylim([-1, 5])
+    ax.set_ylim(ylim)
     ax.margins(x=0, y=0.1)  # no margins on x and y-axis
     ax.grid(color="blue", linestyle="--", linewidth=1, alpha=0.2)
     spines = ["top", "right", "bottom", "left"]
@@ -43,16 +48,18 @@ def plot_model(
     y: np.array,
     predicted: np.array,
     title: str = "Linear Model",
+    ylim: list = [-1, 5],
+    function_name: str = "y = x^2",
 ) -> None:
     fig, ax = plt.subplots(figsize=(8, 6), dpi=120)
-    ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label="y=x^2")
+    ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label=function_name)
     ax.plot(x.numpy(), predicted, "b-", linewidth=2.5, label=title)
     ax.set_title(f"{title}", weight="bold", fontsize=16)
     ax.margins(x=0, y=0.1)  # No margins on x and y-axis
     ax.grid(color="blue", linestyle="--", linewidth=1, alpha=0.2)
     ax.set_xlabel("X-axis", fontsize=14)
     ax.set_ylabel("Y-axis", fontsize=14)
-    ax.set_ylim([-1, 5])
+    ax.set_ylim(ylim)
     ax.legend(loc="upper right")
     ax.legend(loc="best")
     spines = ["top", "right", "bottom", "left"]
@@ -69,20 +76,21 @@ def plot_animation(
     file_name: str = "linear",
     folder_name: str = "linear_plots",
     model_name: str = "Linear Model",
-    red_legend: str = "y=x^2",
     legend_loc: str = "best",
+    ylim: list = [-1, 5],
+    function_name: str = "y=x^2",
 ) -> None:
     for epoch, predicted in preds.items():
         path = make_directory("plots", f"{folder_name}")
         fig, ax = plt.subplots(figsize=(8, 6), dpi=200)
-        ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label=red_legend)
+        ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label=function_name)
         ax.plot(x.numpy(), predicted, "b-", linewidth=2.5, label=model_name)
         ax.set_title(f"{model_name}, epoch={epoch}", weight="bold", fontsize=16)
         ax.margins(x=0, y=0.1)  # No margins on x and y-axis
         ax.grid(color="blue", linestyle="--", linewidth=1, alpha=0.2)
         ax.set_xlabel("X-axis", fontsize=14)
         ax.set_ylabel("Y-axis", fontsize=14)
-        ax.set_ylim([-1, 5])
+        ax.set_ylim(ylim)
         ax.legend(loc=legend_loc)
         spines = ["top", "right", "bottom", "left"]
         for s in spines:
