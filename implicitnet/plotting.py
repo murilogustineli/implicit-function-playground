@@ -29,7 +29,14 @@ def plot_function(
     dpi: int = 120,
 ):
     fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
-    ax.plot(x.numpy(), y.numpy(), label=function_name, c="red", linewidth=2.5)
+    ax.plot(
+        x.numpy(),
+        y.numpy(),
+        label=function_name,
+        c="red",
+        linewidth=2.5,
+        linestyle="--",
+    )
     ax.set_title("Function Approximation", weight="bold", fontsize=16)
     ax.set_xlabel("X-axis", fontsize=14)
     ax.set_ylabel("Y-axis", fontsize=14)
@@ -56,8 +63,15 @@ def plot_model(
     dpi: int = 120,
 ) -> None:
     fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
-    ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label=function_name)
-    ax.plot(x.numpy(), predicted, "b-", linewidth=2.5, label=title)
+    ax.plot(
+        x.numpy(),
+        y.numpy(),
+        c="red",
+        linewidth=2.5,
+        label=function_name,
+        linestyle="--",
+    )
+    ax.plot(x.numpy(), predicted, c="blue", linewidth=2.5, label=title)
     ax.set_title(f"{title}", weight="bold", fontsize=16)
     ax.margins(x=0, y=0.1)  # No margins on x and y-axis
     ax.grid(color="blue", linestyle="--", linewidth=1, alpha=0.2)
@@ -89,8 +103,15 @@ def plot_animation(
     for epoch, predicted in preds.items():
         path = make_directory("plots", f"{folder_name}")
         fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
-        ax.plot(x.numpy(), y.numpy(), "r-", linewidth=2.5, label=function_name)
-        ax.plot(x.numpy(), predicted, "b-", linewidth=2.5, label=model_name)
+        ax.plot(
+            x.numpy(),
+            y.numpy(),
+            c="red",
+            linewidth=2.5,
+            label=function_name,
+            linestyle="--",
+        )
+        ax.plot(x.numpy(), predicted, c="blue", linewidth=2.5, label=model_name)
         ax.set_title(f"{model_name}, epoch={epoch}", weight="bold", fontsize=16)
         ax.margins(x=0, y=0.1)  # No margins on x and y-axis
         ax.grid(color="blue", linestyle="--", linewidth=1, alpha=0.2)
