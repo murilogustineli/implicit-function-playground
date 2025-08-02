@@ -25,7 +25,5 @@ Issues = "https://github.com/murilogustineli/implicit-function-playground/issues
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["implicitnet"]
-namespaces = false
+[tool.setuptools]
+packages = ["implicitnet"]
