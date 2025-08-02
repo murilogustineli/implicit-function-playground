@@ -1,5 +1,5 @@
 [project]
-name = "ifp"
+name = "implicitnet"
 version = "0.0.1"
 authors = [{ name = "Murilo Gustineli", email = "murilogustineli@gmail.com" }]
 description = "Implicit Function Playground helper package"
@@ -27,5 +27,5 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["ifp"]
+include = ["implicitnet"]
 namespaces = false
