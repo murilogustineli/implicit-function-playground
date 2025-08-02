@@ -1,6 +1,7 @@
 import os
 from typing import Dict
 
+import imageio
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -89,3 +90,30 @@ def plot_animation(
         plt.savefig(f"./{path}/{file_name}_{epoch}.png", bbox_inches="tight", dpi=200)
         # plt.show()
         plt.close()
+
+
+def create_gif(
+    folder_name: str = "linear_plots",
+    file_name: str = "linear",
+    n_iters: list = None,
+    duration: int = 64,
+) -> None:
+    # get paths and create directories
+    path = os.path.abspath(os.path.join(os.getcwd(), ".."))
+    plots_dir = os.path.join(path, "plots", folder_name)
+    animation_dir = os.path.join(path, "animations")
+    if not os.path.exists(animation_dir):
+        os.makedirs(animation_dir)
+
+    # create animation
+    frames = []
+    for epoch in n_iters:
+        image = imageio.v2.imread(f"{plots_dir}/{file_name}_{epoch}.png")
+        frames.append(image)
+
+    imageio.mimsave(
+        f"{animation_dir}/{file_name}_animation.gif",  # output gif
+        frames,  # array of input frames
+        duration=duration,  # optional: frames per second
+        loop=0,  # loop the gif
+    )
