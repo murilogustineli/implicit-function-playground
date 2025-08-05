@@ -67,22 +67,26 @@ def plot_model(
     ylim: list = [-1, 5],
     function_name: str = "y = x^2",
     figsize: tuple = (8, 6),
+    linewidth: float = 2.5,
     dpi: int = 120,
 ) -> None:
+    # create figure and axis
     fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
     # calculate scaling factor based on figure area relative to baseline (8,6)
     baseline_area = 8 * 6
     current_area = figsize[0] * figsize[1]
     scaling_factor = (current_area / baseline_area) ** 0.5
+
+    # plot function and model prediction
     ax.plot(
         x.numpy(),
         y.numpy(),
         c="red",
-        linewidth=2.5,
+        linewidth=linewidth,
         label=function_name,
         linestyle="--",
     )
-    ax.plot(x.numpy(), predicted, c="blue", linewidth=2.5, label=title)
+    ax.plot(x.numpy(), predicted, c="blue", linewidth=linewidth, label=title)
     ax.set_title(f"{title}", weight="bold", fontsize=16 * scaling_factor)
     ax.margins(x=0, y=0.1)  # No margins on x and y-axis
     ax.grid(color="blue", linestyle="--", linewidth=1, alpha=0.2)
@@ -175,6 +179,7 @@ def plot_animation(
     ylim: list = [-1, 5],
     function_name: str = "y=x^2",
     figsize: tuple = (8, 6),
+    linewidth: float = 2.5,
     dpi: int = 200,
 ) -> None:
     # calculate scaling factor based on figure area relative to baseline (8,6)
@@ -190,11 +195,11 @@ def plot_animation(
             x.numpy(),
             y.numpy(),
             c="red",
-            linewidth=2.5,
+            linewidth=linewidth,
             label=function_name,
             linestyle="--",
         )
-        ax.plot(x.numpy(), predicted, c="blue", linewidth=2.5, label=model_name)
+        ax.plot(x.numpy(), predicted, c="blue", linewidth=linewidth, label=model_name)
         ax.set_title(
             f"{model_name}, epoch={epoch}", weight="bold", fontsize=16 * scaling_factor
         )
