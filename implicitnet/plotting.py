@@ -107,25 +107,33 @@ def plot_model_predictions(
     ylim: list = [-1, 5],
     function_name: str = "y = x^2",
     figsize: tuple = (8, 6),
+    rows_cols: tuple = (4, 1),
     dpi: int = 120,
 ):
-    fig, ax = plt.subplots(4, 1, figsize=figsize, dpi=dpi)
-    # calculate scaling factor based on figure area relative to baseline (8,6)
-    baseline_area = 8 * 6
-    current_area = figsize[0] * figsize[1]
-    scaling_factor = (current_area / baseline_area) ** 0.5
-    # get predictions for 4 different epochs
-    interval = len(predictions) // 8
-    intervals = list(range(0, len(predictions), interval))
-    pred_intervals = [intervals[0], intervals[1], intervals[2], intervals[-1]]
+    # create subplots based on rows and columns
+    fig, ax = plt.subplots(rows_cols[0], rows_cols[1], figsize=figsize, dpi=dpi)
+
+    # get predictions for different epochs dynamically
+    num_preds = len(predictions)
+    num_plots = rows_cols[0] * rows_cols[1]
+    interval = num_preds // 8
+    intervals = list(range(0, num_preds, interval))
+    pred_intervals = [intervals[i] for i in range(num_plots - 1)]
+    # ensure the last interval is included
+    pred_intervals += [num_preds - (num_preds % 100)]
     curves = [predictions[i] for i in pred_intervals]
+
+    # calculate scaling factor based on individual subplot area relative to baseline (8,6)
+    baseline_area = 8 * 6
+    subplot_area = (figsize[0] * figsize[1]) / (rows_cols[0] * rows_cols[1])
+    scaling_factor = (subplot_area / baseline_area) ** 0.5
 
     for i, curve in enumerate(curves):
         ax[i].plot(
             x.numpy(),
             y.numpy(),
             c="red",
-            linewidth=2.5,
+            linewidth=3 * scaling_factor,
             linestyle="--",
             label=function_name,
         )
@@ -133,24 +141,24 @@ def plot_model_predictions(
             x.numpy(),
             curve,
             c="blue",
-            linewidth=2.5,
+            linewidth=3 * scaling_factor,
             linestyle="-",
             label=f"Model Prediction at Epoch {pred_intervals[i]}",
         )
         ax[i].set_title(
             f"{title} - Epoch {pred_intervals[i]}",
             weight="bold",
-            fontsize=10 * scaling_factor,
+            fontsize=16 * scaling_factor,
         )
         ax[i].set_ylim(ylim)
-        ax[i].set_xlabel("X-axis", fontsize=8 * scaling_factor)
-        ax[i].set_ylabel("Y-axis", fontsize=8 * scaling_factor)
-        ax[i].tick_params(axis="both", which="major", labelsize=6 * scaling_factor)
+        ax[i].set_xlabel("X-axis", fontsize=14 * scaling_factor)
+        ax[i].set_ylabel("Y-axis", fontsize=14 * scaling_factor)
+        ax[i].tick_params(axis="both", which="major", labelsize=12 * scaling_factor)
         ax[i].margins(x=0, y=0.1)  # No margins on x and y-axis
         ax[i].grid(color="blue", linestyle="--", linewidth=1, alpha=0.2)
         for spine in ax[i].spines.values():
             spine.set_visible(False)
-        ax[i].legend(loc="upper right", fontsize=6 * scaling_factor)
+        ax[i].legend(loc="upper right", fontsize=12 * scaling_factor)
 
     fig.tight_layout(pad=0.5)
     plt.show()
