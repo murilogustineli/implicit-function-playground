@@ -16,6 +16,7 @@ dependencies = [
     "pre-commit",
     "torch>=2.5.1",
     "imageio>=2.37.0",
+    "torchvision>=0.22.1",
 ]
 
 [project.urls]
