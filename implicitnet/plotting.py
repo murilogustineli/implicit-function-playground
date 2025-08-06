@@ -244,3 +244,42 @@ def create_gif(
         duration=duration,  # optional: frames per second
         loop=0,  # loop the gif
     )
+
+
+def plot_image_predictions(
+    predictions: list,
+    height: int = 28,
+    width: int = 28,
+    rows_cols: tuple = (1, 4),
+    cmap: str = "plasma",
+    dpi: int = 120,
+    title_prefix: str = "Prediction",
+):
+    num_plots = rows_cols[0] * rows_cols[1]
+    num_preds = len(predictions)
+
+    # select evenly spaced snapshots
+    interval = max(1, num_preds // num_plots)
+    selected_epochs = list(range(0, num_preds, interval))[: num_plots - 1]
+    selected_epochs.append(num_preds - (num_preds % 100))
+    selected_preds = [predictions[i] for i in selected_epochs]
+
+    # create plot grid
+    fig, ax = plt.subplots(
+        rows_cols[0],
+        rows_cols[1],
+        figsize=(4 * rows_cols[1], 4 * rows_cols[0]),
+        dpi=dpi,
+    )
+    ax = ax.flatten()
+
+    for i, pred in enumerate(selected_preds):
+        pred_image = np.clip(pred.reshape(height, width), 0, 1)
+        ax[i].imshow(pred_image, cmap=cmap, vmin=0, vmax=1)
+        ax[i].set_title(
+            f"{title_prefix} - Epoch {selected_epochs[i]}", fontsize=12, weight="bold"
+        )
+        ax[i].axis("off")
+
+    fig.tight_layout()
+    plt.show()
