@@ -5,6 +5,8 @@ import imageio
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+from PIL import Image
+from torchvision import transforms
 
 
 # Make Directory
@@ -283,3 +285,26 @@ def plot_image_predictions(
 
     fig.tight_layout()
     plt.show()
+
+
+def load_preprocess_image(image_path, target_size: int = 128):
+    # load and crop to centered square
+    img = Image.open(image_path).convert("RGB")
+    min_dim = min(img.size)
+    width, height = img.size
+    left = (width - min_dim) / 2
+    top = (height - min_dim) / 2
+    right = (width + min_dim) / 2
+    bottom = (height + min_dim) / 2
+    image = img.crop((left, top, right, bottom))
+
+    # convert to grayscale and resize
+    transform = transforms.Compose(
+        [
+            transforms.Grayscale(num_output_channels=1),
+            transforms.Resize((target_size, target_size)),
+            transforms.ToTensor(),  # converts to [0, 1] and shape [1, H, W]
+        ]
+    )
+
+    return transform(image).squeeze(0)  # shape: [H, W]
