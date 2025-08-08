@@ -1,5 +1,7 @@
 # implicit-function-playground
 
+![banner](./images/girl-pearl-neuralnet.png)
+
 A visual playground for understanding how neural networks approximate continuous functions and grayscale images.
 
 ## Quickstart
