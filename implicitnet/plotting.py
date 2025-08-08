@@ -256,15 +256,19 @@ def plot_image_predictions(
     cmap: str = "plasma",
     dpi: int = 120,
     title_prefix: str = "Prediction",
+    selected_epochs: list = None,
 ):
     num_plots = rows_cols[0] * rows_cols[1]
     num_preds = len(predictions)
 
     # select evenly spaced snapshots
-    interval = max(1, num_preds // num_plots)
-    selected_epochs = list(range(0, num_preds, interval))[: num_plots - 1]
-    selected_epochs.append(num_preds - (num_preds % 100))
-    selected_preds = [predictions[i] for i in selected_epochs]
+    if not selected_epochs:
+        interval = max(1, num_preds // num_plots)
+        selected_epochs = list(range(0, num_preds, interval))[: num_plots - 1]
+        selected_epochs.append(num_preds - (num_preds % 100))
+        selected_preds = [predictions[i] for i in selected_epochs]
+    else:
+        selected_preds = [predictions[i] for i in selected_epochs]
 
     # create plot grid
     fig, ax = plt.subplots(
