@@ -257,6 +257,7 @@ def plot_image_predictions(
     dpi: int = 120,
     title_prefix: str = "Prediction",
     selected_epochs: list = None,
+    save_plot: bool = False,
 ):
     num_plots = rows_cols[0] * rows_cols[1]
     num_preds = len(predictions)
@@ -288,6 +289,9 @@ def plot_image_predictions(
         ax[i].axis("off")
 
     fig.tight_layout()
+    if save_plot:
+        fig_name = f"girl-pearl-{rows_cols[0]}x{rows_cols[1]}-{height}px-{cmap}"
+        plt.savefig(f"../images/{fig_name}.png", bbox_inches="tight", dpi=dpi)
     plt.show()
 
 
