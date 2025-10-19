@@ -258,6 +258,7 @@ def plot_image_predictions(
     title_prefix: str = "Prediction",
     selected_epochs: list = None,
     save_plot: bool = False,
+    image_name: str = "image-preds",
 ):
     num_plots = rows_cols[0] * rows_cols[1]
     num_preds = len(predictions)
@@ -290,7 +291,7 @@ def plot_image_predictions(
 
     fig.tight_layout()
     if save_plot:
-        fig_name = f"girl-pearl-{rows_cols[0]}x{rows_cols[1]}-{height}px-{cmap}"
+        fig_name = f"{image_name}-{rows_cols[0]}x{rows_cols[1]}-{height}px-{cmap}"
         plt.savefig(f"../images/{fig_name}.png", bbox_inches="tight", dpi=dpi)
     plt.show()
 
