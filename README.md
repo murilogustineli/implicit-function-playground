@@ -1,6 +1,6 @@
 # implicit-function-playground
 
-![banner](./images/girl-pearl-1x4-256px-inferno.png)
+![banner](./images/starry-night-1x4-512px-inferno.png)
 
 A visual playground for understanding how neural networks approximate continuous functions and grayscale images.
 
